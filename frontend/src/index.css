@@ -1,0 +1,53 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-clinic-mist text-clinic-ink font-body antialiased;
+  }
+  h1, h2, h3, h4 {
+    @apply font-display text-clinic-navy;
+  }
+  :focus-visible {
+    outline: 2px solid theme('colors.clinic.sky');
+    outline-offset: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-clinic-teal px-6 py-3
+      font-display font-semibold text-white shadow-card transition-all duration-200
+      hover:bg-clinic-navy hover:shadow-card-hover active:scale-[0.98];
+  }
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border-2 border-clinic-teal
+      px-6 py-3 font-display font-semibold text-clinic-teal transition-all duration-200
+      hover:bg-clinic-teal hover:text-white active:scale-[0.98];
+  }
+  .card {
+    @apply rounded-xl2 border border-clinic-border bg-white p-6 shadow-card transition-shadow duration-300 hover:shadow-card-hover;
+  }
+  .section-eyebrow {
+    @apply mb-3 inline-block font-mono text-xs font-medium uppercase tracking-[0.2em] text-clinic-teal;
+  }
+  .input-field {
+    @apply w-full rounded-lg border border-clinic-border bg-white px-4 py-3 text-clinic-ink
+      placeholder:text-clinic-ink/40 focus:border-clinic-teal focus:outline-none focus:ring-2 focus:ring-clinic-teal/20;
+  }
+  .input-label {
+    @apply mb-1.5 block text-sm font-medium text-clinic-ink/80;
+  }
+}

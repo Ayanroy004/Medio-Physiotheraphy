@@ -1,0 +1,24 @@
+import axios from 'axios';
+
+const api = axios.create({
+  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5000/api',
+  withCredentials: true,
+});
+
+// Attach JWT (fallback for environments without cookie support)
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem('vitality_token');
+  if (token) config.headers.Authorization = `Bearer ${token}`;
+  return config;
+});
+
+// Normalize error messages so components can just read err.message
+api.interceptors.response.use(
+  (res) => res,
+  (error) => {
+    const message = error.response?.data?.message || 'Something went wrong. Please try again.';
+    return Promise.reject(new Error(message));
+  }
+);
+
+export default api;
