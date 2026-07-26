@@ -1,13 +1,13 @@
-const express = require('express');
-const {
+import express from 'express';
+import {
   getServices,
   getServiceByIdOrSlug,
   createService,
   updateService,
   deleteService,
-} = require('../controllers/serviceController');
-const { protect, authorize } = require('../middleware/auth');
-const { serviceRules, validate } = require('../middleware/validators');
+} from '../controllers/serviceController.js';
+import { protect, authorize } from '../middleware/auth.js';
+import { serviceRules, validate } from '../middleware/validators.js';
 
 const router = express.Router();
 

@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-const slugify = require('slugify');
+import mongoose from 'mongoose';
+import slugify from 'slugify';
 
 const SERVICE_CATEGORIES = [
   'Sports Rehab',
@@ -67,5 +67,6 @@ serviceSchema.pre('validate', function generateSlug(next) {
 
 serviceSchema.index({ category: 1 });
 
-module.exports = mongoose.model('Service', serviceSchema);
-module.exports.SERVICE_CATEGORIES = SERVICE_CATEGORIES;
+
+export default mongoose.model('Service', serviceSchema);
+export { SERVICE_CATEGORIES };

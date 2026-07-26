@@ -1,5 +1,6 @@
-const asyncHandler = require("express-async-handler");
-const User = require("../models/User");
+import asyncHandler from 'express-async-handler';
+import User from '../models/User.js';
+
 
 const cookieOptions = () => ({
   httpOnly: true,
@@ -14,7 +15,7 @@ const cookieOptions = () => ({
 // @desc    Register a new staff/admin user
 // @route   POST /api/auth/register
 // @access  Public (in production, restrict this to an existing admin)
-exports.register = asyncHandler(async (req, res) => {
+export const register = asyncHandler(async (req, res) => {
   const { name, email, password, role } = req.body;
   try {
     const existing = await User.findOne({ email });
@@ -48,7 +49,7 @@ exports.register = asyncHandler(async (req, res) => {
 // @desc    Log in staff/admin user
 // @route   POST /api/auth/login
 // @access  Public
-exports.login = asyncHandler(async (req, res) => {
+export const login = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
 
   const user = await User.findOne({ email }).select("+password");
@@ -84,7 +85,7 @@ exports.login = asyncHandler(async (req, res) => {
 // @desc    Log out (clear cookie)
 // @route   POST /api/auth/logout
 // @access  Private
-exports.logout = asyncHandler(async (req, res) => {
+export const logout = asyncHandler(async (req, res) => {
   res.cookie("token", "none", {
     expires: new Date(Date.now() + 1000),
     httpOnly: true,
@@ -95,6 +96,6 @@ exports.logout = asyncHandler(async (req, res) => {
 // @desc    Get current logged-in user
 // @route   GET /api/auth/me
 // @access  Private
-exports.getMe = asyncHandler(async (req, res) => {
+export const getMe = asyncHandler(async (req, res) => {
   res.status(200).json({ success: true, user: req.user });
 });

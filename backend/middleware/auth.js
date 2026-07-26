@@ -1,9 +1,8 @@
-const jwt = require('jsonwebtoken');
-const asyncHandler = require('express-async-handler');
-const User = require('../models/User');
-
+import jwt from 'jsonwebtoken';
+import asyncHandler from 'express-async-handler';
+import User from '../models/User.js';
 // Protect routes - verifies JWT from Authorization header or cookie
-exports.protect = asyncHandler(async (req, res, next) => {
+export const protect = asyncHandler(async (req, res, next) => {
   let token;
 
   if (req.headers.authorization?.startsWith('Bearer')) {
@@ -34,8 +33,9 @@ exports.protect = asyncHandler(async (req, res, next) => {
   }
 });
 
+
 // Restrict access to specific roles
-exports.authorize = (...roles) => (req, res, next) => {
+export const authorize = (...roles) => (req, res, next) => {
   if (!roles.includes(req.user.role)) {
     res.status(403);
     throw new Error(`Role '${req.user.role}' is not permitted to perform this action.`);

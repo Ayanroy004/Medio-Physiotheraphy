@@ -1,11 +1,11 @@
-const asyncHandler = require('express-async-handler');
-const Appointment = require('../models/Appointment');
-const Service = require('../models/Service');
+import asyncHandler from 'express-async-handler';
+import Appointment from '../models/Appointment.js';
+import Service from '../models/Service.js';
 
 // @desc    Create a new appointment booking (public booking flow)
 // @route   POST /api/appointments
 // @access  Public
-exports.createAppointment = asyncHandler(async (req, res) => {
+export const createAppointment = asyncHandler(async (req, res) => {
   const { serviceId, appointmentDate, timeSlot } = req.body;
 
   const service = await Service.findById(serviceId);
@@ -38,7 +38,7 @@ exports.createAppointment = asyncHandler(async (req, res) => {
 // @desc    Get available time slots for a service on a given date
 // @route   GET /api/appointments/availability?serviceId=&date=
 // @access  Public
-exports.getAvailability = asyncHandler(async (req, res) => {
+export const getAvailability = asyncHandler(async (req, res) => {
   const { date } = req.query;
   if (!date) {
     res.status(400);
@@ -69,7 +69,7 @@ exports.getAvailability = asyncHandler(async (req, res) => {
 // @desc    Get all appointments with filtering + pagination (admin)
 // @route   GET /api/appointments?status=&date=&page=&limit=
 // @access  Private/Admin
-exports.getAppointments = asyncHandler(async (req, res) => {
+export const getAppointments = asyncHandler(async (req, res) => {
   const { status, date, search } = req.query;
   const page = parseInt(req.query.page, 10) || 1;
   const limit = parseInt(req.query.limit, 10) || 10;
@@ -111,7 +111,7 @@ exports.getAppointments = asyncHandler(async (req, res) => {
 // @desc    Get single appointment
 // @route   GET /api/appointments/:id
 // @access  Private/Admin
-exports.getAppointment = asyncHandler(async (req, res) => {
+export const getAppointment = asyncHandler(async (req, res) => {
   const appointment = await Appointment.findById(req.params.id).populate('serviceId');
   if (!appointment) {
     res.status(404);
@@ -123,7 +123,7 @@ exports.getAppointment = asyncHandler(async (req, res) => {
 // @desc    Update appointment status (Confirm / Cancel / Complete)
 // @route   PATCH /api/appointments/:id/status
 // @access  Private/Admin
-exports.updateAppointmentStatus = asyncHandler(async (req, res) => {
+export const updateAppointmentStatus = asyncHandler(async (req, res) => {
   const { status } = req.body;
 
   const appointment = await Appointment.findById(req.params.id);
@@ -141,7 +141,7 @@ exports.updateAppointmentStatus = asyncHandler(async (req, res) => {
 // @desc    Get quick dashboard metrics
 // @route   GET /api/appointments/metrics
 // @access  Private/Admin
-exports.getMetrics = asyncHandler(async (req, res) => {
+export const getMetrics = asyncHandler(async (req, res) => {
   const startOfToday = new Date();
   startOfToday.setHours(0, 0, 0, 0);
   const endOfToday = new Date();

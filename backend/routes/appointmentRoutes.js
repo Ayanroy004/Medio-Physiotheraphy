@@ -1,14 +1,14 @@
-const express = require('express');
-const {
+import express from 'express';
+import {
   createAppointment,
   getAvailability,
   getAppointments,
   getAppointment,
   updateAppointmentStatus,
   getMetrics,
-} = require('../controllers/appointmentController');
-const { protect, authorize } = require('../middleware/auth');
-const { appointmentRules, statusUpdateRules, validate } = require('../middleware/validators');
+} from '../controllers/appointmentController.js';
+import { protect, authorize } from '../middleware/auth.js';
+import { appointmentRules, statusUpdateRules, validate } from '../middleware/validators.js';
 
 const router = express.Router();
 
@@ -29,4 +29,4 @@ router.patch(
   updateAppointmentStatus
 );
 
-module.exports = router;
+export default router;

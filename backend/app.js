@@ -1,16 +1,16 @@
-const express = require('express');
-const cors = require('cors');
-const helmet = require('helmet');
-const morgan = require('morgan');
-const cookieParser = require('cookie-parser');
-const mongoSanitize = require('express-mongo-sanitize');
-const rateLimit = require('express-rate-limit');
+import express from 'express';
+import cors from 'cors';
+import helmet from 'helmet';
+import morgan from 'morgan';
+import cookieParser from 'cookie-parser';
+import mongoSanitize from 'express-mongo-sanitize';
+import rateLimit from 'express-rate-limit';
 
-const { notFound, errorHandler } = require('./middleware/errorHandler');
-const authRoutes = require('./routes/authRoutes');
-const serviceRoutes = require('./routes/serviceRoutes');
-const appointmentRoutes = require('./routes/appointmentRoutes');
-const testimonialRoutes = require('./routes/testimonialRoutes');
+import { notFound, errorHandler } from './middleware/errorHandler.js';
+import authRoutes from './routes/authRoutes.js';
+import serviceRoutes from './routes/serviceRoutes.js';
+import appointmentRoutes from './routes/appointmentRoutes.js';
+import testimonialRoutes from './routes/testimonialRoutes.js';
 
 const app = express();
 
@@ -54,4 +54,4 @@ app.use('/api/testimonials', testimonialRoutes);
 app.use(notFound);
 app.use(errorHandler);
 
-module.exports = app;
+export default app;

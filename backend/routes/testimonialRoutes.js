@@ -1,12 +1,12 @@
-const express = require('express');
-const {
+import express from 'express';
+import {
   getTestimonials,
   createTestimonial,
   updateTestimonial,
   deleteTestimonial,
-} = require('../controllers/testimonialController');
-const { protect, authorize } = require('../middleware/auth');
-const { testimonialRules, validate } = require('../middleware/validators');
+} from '../controllers/testimonialController.js';
+import { protect, authorize } from '../middleware/auth.js';
+import { testimonialRules, validate } from '../middleware/validators.js';
 
 const router = express.Router();
 
