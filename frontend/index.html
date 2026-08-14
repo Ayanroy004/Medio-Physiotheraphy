@@ -18,15 +18,5 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
-    <script>
-      // Wake up Render backend as early as possible
-      fetch('https://medio-physiotheraphy.onrender.com/api/health', {
-        method: 'GET',
-        cache: 'no-store',
-        keepalive: true,
-      }).catch(() => {
-        // Ignore error — React application can still load
-      });
-    </script>
   </body>
 </html>
