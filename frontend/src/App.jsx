@@ -1,24 +1,25 @@
-import { Routes, Route } from "react-router-dom";
-import Navbar from "./components/layout/Navbar.jsx";
-import Footer from "./components/layout/Footer.jsx";
-import HomePage from "./pages/HomePage.jsx";
-import ServicesPage from "./pages/ServicesPage.jsx";
-import AboutPage from "./pages/AboutPage.jsx";
-import ContactPage from "./pages/ContactPage.jsx";
-import BookingPage from "./pages/BookingPage.jsx";
-import AdminLoginPage from "./pages/admin/AdminLoginPage.jsx";
-import AdminDashboardPage from "./pages/admin/AdminDashboardPage.jsx";
-import AdminAppointmentsPage from "./pages/admin/AdminAppointmentsPage.jsx";
-import AdminServicesPage from "./pages/admin/AdminServicesPage.jsx";
-import AdminLayout from "./components/admin/AdminLayout.jsx";
-import ProtectedRoute from "./components/admin/ProtectedRoute.jsx";
-import NotFoundPage from "./pages/NotFoundPage.jsx";
+import { Route, Routes } from "react-router-dom";
+import Navbar from "./components/layout/Navbar";
+import ServiceDetailPage from "./pages/ServiceDetailPage";
+import ServicesPage from "./pages/ServicesPage";
+import HomePage from "./pages/HomePage";
+import Footer from "./components/layout/Footer";
+import AboutPage from "./pages/AboutPage";
+import ContactPage from "./pages/ContactPage";
+import AdminLoginPage from "./pages/admin/AdminLoginPage";
+import ProtectedRoute from "./components/admin/ProtectedRoute";
+import AdminLayout from "./components/admin/AdminLayout";
+import AdminDashboardPage from "./pages/admin/AdminDashboardPage";
+import AdminServicesPage from "./pages/admin/AdminServicesPage";
+import NotFoundPage from "./pages/NotFoundPage";
 
 function PublicLayout({ children }) {
   return (
     <div className="flex min-h-screen flex-col">
       <Navbar />
+
       <main className="flex-1">{children}</main>
+
       <Footer />
     </div>
   );
@@ -27,7 +28,11 @@ function PublicLayout({ children }) {
 export default function App() {
   return (
     <Routes>
-      {/* Public patient-facing site */}
+      {/* ================================================================
+          PUBLIC PATIENT-FACING SITE
+      ================================================================= */}
+
+      {/* Home */}
       <Route
         path="/"
         element={
@@ -36,6 +41,8 @@ export default function App() {
           </PublicLayout>
         }
       />
+
+      {/* Services */}
       <Route
         path="/services"
         element={
@@ -44,6 +51,18 @@ export default function App() {
           </PublicLayout>
         }
       />
+
+      {/* Service Details */}
+      <Route
+        path="/services/:id"
+        element={
+          <PublicLayout>
+            <ServiceDetailPage />
+          </PublicLayout>
+        }
+      />
+
+      {/* About */}
       <Route
         path="/about"
         element={
@@ -52,6 +71,8 @@ export default function App() {
           </PublicLayout>
         }
       />
+
+      {/* Contact */}
       <Route
         path="/contact"
         element={
@@ -60,6 +81,9 @@ export default function App() {
           </PublicLayout>
         }
       />
+
+      {/* Booking */}
+      {/*
       <Route
         path="/book"
         element={
@@ -68,9 +92,16 @@ export default function App() {
           </PublicLayout>
         }
       />
+      */}
 
-      {/* Admin */}
+      {/* ================================================================
+          ADMIN
+      ================================================================= */}
+
+      {/* Admin Login */}
       <Route path="/admin/login" element={<AdminLoginPage />} />
+
+      {/* Protected Admin Routes */}
       <Route
         path="/admin"
         element={
@@ -79,10 +110,32 @@ export default function App() {
           </ProtectedRoute>
         }
       >
+        {/* /admin */}
         <Route index element={<AdminDashboardPage />} />
-        <Route path="appointments" element={<AdminAppointmentsPage />} />
+
+        {/* /admin/services */}
         <Route path="services" element={<AdminServicesPage />} />
+
+        {/* /admin/appointments */}
+        {/*
+        <Route
+          path="appointments"
+          element={<AdminAppointmentsPage />}
+        />
+        */}
+
+        {/* /admin/add-member */}
+        {/*
+        <Route
+          path="add-member"
+          element={<AdminAddMemberPage />}
+        />
+        */}
       </Route>
+
+      {/* ================================================================
+          404
+      ================================================================= */}
 
       <Route
         path="*"

@@ -1,10 +1,10 @@
-import { useState } from 'react';
-import { useNavigate, Navigate } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
-import toast from 'react-hot-toast';
-import { LogIn } from 'lucide-react';
-import { useAuth } from '../../context/AuthContext.jsx';
-import Logo from '../../components/ui/Logo.jsx';
+import { useState } from "react";
+import { useNavigate, Navigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
+import { LogIn } from "lucide-react";
+import { useAuth } from "../../context/AuthContext.jsx";
+import Logo from "../../components/ui/Logo.jsx";
 
 export default function AdminLoginPage() {
   const { login, user, loading } = useAuth();
@@ -22,10 +22,10 @@ export default function AdminLoginPage() {
     setSubmitting(true);
     try {
       await login(values);
-      toast.success('Welcome back!');
-      navigate('/admin');
+      toast.success("Welcome back!");
+      navigate("/admin");
     } catch (error) {
-      toast.error(error.message || 'Invalid email or password');
+      toast.error(error.message || "Invalid email or password");
     } finally {
       setSubmitting(false);
     }
@@ -46,30 +46,46 @@ export default function AdminLoginPage() {
 
         <form onSubmit={handleSubmit(onSubmit)} className="mt-6 space-y-4">
           <div>
-            <label className="input-label" htmlFor="email">Email</label>
+            <label className="input-label" htmlFor="email">
+              Email
+            </label>
             <input
               id="email"
               type="email"
               className="input-field"
               placeholder="admin@vitalityphysio.com"
-              {...register('email', { required: 'Email is required' })}
+              {...register("email", { required: "Email is required" })}
             />
-            {errors.email && <p className="mt-1 text-xs text-clinic-danger">{errors.email.message}</p>}
+            {errors.email && (
+              <p className="mt-1 text-xs text-clinic-danger">
+                {errors.email.message}
+              </p>
+            )}
           </div>
           <div>
-            <label className="input-label" htmlFor="password">Password</label>
+            <label className="input-label" htmlFor="password">
+              Password
+            </label>
             <input
               id="password"
               type="password"
               className="input-field"
               placeholder="••••••••"
-              {...register('password', { required: 'Password is required' })}
+              {...register("password", { required: "Password is required" })}
             />
-            {errors.password && <p className="mt-1 text-xs text-clinic-danger">{errors.password.message}</p>}
+            {errors.password && (
+              <p className="mt-1 text-xs text-clinic-danger">
+                {errors.password.message}
+              </p>
+            )}
           </div>
-          <button type="submit" disabled={submitting} className="btn-primary w-full disabled:opacity-60">
+          <button
+            type="submit"
+            disabled={submitting}
+            className="btn-primary w-full disabled:opacity-60"
+          >
             <LogIn className="h-4 w-4" />
-            {submitting ? 'Signing in...' : 'Sign In'}
+            {submitting ? "Signing in..." : "Sign In"}
           </button>
         </form>
       </div>

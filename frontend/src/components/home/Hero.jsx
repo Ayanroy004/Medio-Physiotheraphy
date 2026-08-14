@@ -21,16 +21,16 @@ export default function Hero() {
             <span className="block text-clinic-sky">We help you find yours.</span>
           </h1>
           <p className="mt-6 max-w-lg text-lg text-white/75">
-            Vitality Physiotherapy blends hands-on manual therapy with personalized
+            Medio Physiotherapy blends hands-on manual therapy with personalized
             movement programs — so pain becomes progress, and progress becomes routine again.
           </p>
 
           <div className="mt-8 flex flex-wrap items-center gap-4">
-            <Link to="/book" className="btn-primary">
+            {/* <Link to="/book" className="btn-primary">
               <CalendarPlus className="h-5 w-5" />
               Book Appointment
-            </Link>
-            <Link to="/services" className="btn-secondary border-white/40 text-white hover:bg-white hover:text-clinic-navy">
+            </Link> */}
+            <Link to="/services" className="btn-secondary btn-primary border-white/40 text-white hover:bg-white hover:text-clinic-navy">
               Explore Services
             </Link>
           </div>

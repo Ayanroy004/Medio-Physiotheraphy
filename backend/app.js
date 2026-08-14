@@ -9,8 +9,8 @@ import rateLimit from 'express-rate-limit';
 import { notFound, errorHandler } from './middleware/errorHandler.js';
 import authRoutes from './routes/authRoutes.js';
 import serviceRoutes from './routes/serviceRoutes.js';
-import appointmentRoutes from './routes/appointmentRoutes.js';
-import testimonialRoutes from './routes/testimonialRoutes.js';
+// import appointmentRoutes from './routes/appointmentRoutes.js';
+// import testimonialRoutes from './routes/testimonialRoutes.js';
 
 const app = express();
 
@@ -37,7 +37,7 @@ const bookingLimiter = rateLimit({
   max: 20,
   message: { success: false, message: 'Too many booking attempts. Please try again later.' },
 });
-app.use('/api/appointments', bookingLimiter);
+// app.use('/api/appointments', bookingLimiter);
 
 // Health check
 app.get('/api/health', (req, res) => {
@@ -47,8 +47,9 @@ app.get('/api/health', (req, res) => {
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/services', serviceRoutes);
-app.use('/api/appointments', appointmentRoutes);
-app.use('/api/testimonials', testimonialRoutes);
+// app.use('/api/appointments', appointmentRoutes);
+// app.use('/api/testimonials', testimonialRoutes);
+// app.use('/api/gallery', testimonialRoutes);
 
 // 404 + error handling (must be last)
 app.use(notFound);

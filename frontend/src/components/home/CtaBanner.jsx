@@ -12,11 +12,11 @@ export default function CtaBanner() {
           Book your initial assessment today and let's build a recovery plan around your goals.
         </p>
         <Link
-          to="/book"
+          to="/contact"
           className="mt-8 inline-flex items-center justify-center gap-2 rounded-full bg-white px-7 py-3 font-display font-semibold text-clinic-teal shadow-card transition-transform hover:scale-105"
         >
           <CalendarPlus className="h-5 w-5" />
-          Book Your Appointment
+          Contact Us
         </Link>
       </div>
     </section>

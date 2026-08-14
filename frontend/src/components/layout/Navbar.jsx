@@ -31,12 +31,12 @@ export default function Navbar() {
           ))}
         </div>
 
-        <div className="hidden md:block">
+        {/* <div className="hidden md:block">
           <NavLink to="/book" className="btn-primary text-sm">
             <CalendarPlus className="h-4 w-4" />
             Book Appointment
           </NavLink>
-        </div>
+        </div> */}
 
         <button
           className="rounded-md p-2 text-clinic-navy md:hidden"

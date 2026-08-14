@@ -1,67 +1,123 @@
-import { useQuery } from '@tanstack/react-query';
-import { Link } from 'react-router-dom';
-import { fetchMetrics, fetchAppointments } from '../../services/appointmentApi.js';
-import MetricsGrid from '../../components/admin/MetricsGrid.jsx';
-import StatusBadge from '../../components/admin/StatusBadge.jsx';
+import { useQuery } from "@tanstack/react-query";
+import { Link } from "react-router-dom";
+import { fetchServices } from "../../services/serviceApi";
 
 export default function AdminDashboardPage() {
-  const { data: metrics, isLoading: metricsLoading } = useQuery({
-    queryKey: ['admin', 'metrics'],
-    queryFn: fetchMetrics,
-  });
-
-  const { data: recent, isLoading: recentLoading } = useQuery({
-    queryKey: ['admin', 'appointments', 'recent'],
-    queryFn: () => fetchAppointments({ page: 1, limit: 5 }),
+  const {
+    data: services = [],
+    isLoading,
+    isError,
+    error,
+  } = useQuery({
+    queryKey: ["admin", "services"],
+    queryFn: () => fetchServices(),
   });
 
   return (
     <div>
-      <h1 className="font-display text-2xl font-bold text-clinic-navy">Dashboard</h1>
-      <p className="mt-1 text-sm text-clinic-ink/60">A quick look at how the clinic is running today.</p>
+      {/* Header */}
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="font-display text-2xl font-bold text-clinic-navy">
+            Services
+          </h1>
 
-      <div className="mt-6">
-        <MetricsGrid metrics={metrics} isLoading={metricsLoading} />
+          <p className="mt-1 text-sm text-clinic-ink/60">
+            Manage all services offered by the clinic.
+          </p>
+        </div>
+
+        <Link
+          to="/admin/services"
+          className="rounded-lg bg-clinic-teal px-4 py-2 text-sm font-medium text-white hover:opacity-90"
+        >
+          Manage Services
+        </Link>
       </div>
 
-      <div className="mt-8 card">
-        <div className="flex items-center justify-between">
-          <h2 className="font-display text-lg font-semibold text-clinic-navy">Recent Bookings</h2>
-          <Link to="/admin/appointments" className="text-sm font-medium text-clinic-teal hover:underline">
-            View all
-          </Link>
-        </div>
+      {/* Services */}
+      <div className="mt-8">
+        {isLoading && (
+          <div className="card py-10 text-center text-clinic-ink/50">
+            Loading services...
+          </div>
+        )}
 
-        <div className="mt-4 overflow-x-auto">
-          <table className="w-full text-left text-sm">
-            <thead>
-              <tr className="border-b border-clinic-border text-clinic-ink/50">
-                <th className="pb-2 pr-4 font-medium">Patient</th>
-                <th className="pb-2 pr-4 font-medium">Service</th>
-                <th className="pb-2 pr-4 font-medium">Date</th>
-                <th className="pb-2 font-medium">Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {recentLoading && (
-                <tr><td colSpan={4} className="py-6 text-center text-clinic-ink/50">Loading...</td></tr>
-              )}
-              {!recentLoading && recent?.data?.map((appt) => (
-                <tr key={appt._id} className="border-b border-clinic-border/60 last:border-0">
-                  <td className="py-3 pr-4 font-medium text-clinic-navy">{appt.patientName}</td>
-                  <td className="py-3 pr-4 text-clinic-ink/70">{appt.serviceId?.title}</td>
-                  <td className="py-3 pr-4 text-clinic-ink/70">
-                    {new Date(appt.appointmentDate).toLocaleDateString()} · {appt.timeSlot}
-                  </td>
-                  <td className="py-3"><StatusBadge status={appt.status} /></td>
-                </tr>
+        {isError && (
+          <div className="card py-10 text-center text-red-500">
+            {error?.message || "Failed to load services."}
+          </div>
+        )}
+
+        {!isLoading && !isError && services.length === 0 && (
+          <div className="card py-10 text-center">
+            <p className="text-clinic-ink/50">No services available yet.</p>
+
+            <Link
+              to="/admin/services"
+              className="mt-3 inline-block text-sm font-medium text-clinic-teal hover:underline"
+            >
+              Add your first service
+            </Link>
+          </div>
+        )}
+
+        {!isLoading && !isError && services.length > 0 && (
+          <>
+            <div className="mb-4 flex items-center justify-between">
+              <h2 className="font-display text-lg font-semibold text-clinic-navy">
+                All Services
+              </h2>
+
+              <span className="text-sm text-clinic-ink/50">
+                {services.length}{" "}
+                {services.length === 1 ? "service" : "services"}
+              </span>
+            </div>
+
+            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+              {services.map((service) => (
+                <div key={service._id} className="card overflow-hidden">
+                  {/* Service Image */}
+                  {service.images?.length > 0 ? (
+                    <div className="h-48 w-full overflow-hidden">
+                      <img
+                        src={service.images[0].imageUrl}
+                        alt={service.title}
+                        className="h-full w-full object-cover"
+                      />
+                    </div>
+                  ) : (
+                    <div className="flex h-48 items-center justify-center bg-clinic-border/20">
+                      <span className="text-sm text-clinic-ink/40">
+                        No image
+                      </span>
+                    </div>
+                  )}
+
+                  {/* Service Information */}
+                  <div className="p-5">
+                    <h3 className="font-display text-lg font-semibold text-clinic-navy">
+                      {service.title}
+                    </h3>
+
+                    <p className="mt-2 line-clamp-3 text-sm leading-6 text-clinic-ink/60">
+                      {service.description}
+                    </p>
+
+                    {/* Image Count */}
+                    {service.images?.length > 0 && (
+                      <p className="mt-3 text-xs text-clinic-ink/40">
+                        {service.images.length}{" "}
+                        {service.images.length === 1 ? "image" : "images"}
+                      </p>
+                    )}
+                  </div>
+                </div>
               ))}
-              {!recentLoading && recent?.data?.length === 0 && (
-                <tr><td colSpan={4} className="py-6 text-center text-clinic-ink/50">No bookings yet.</td></tr>
-              )}
-            </tbody>
-          </table>
-        </div>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

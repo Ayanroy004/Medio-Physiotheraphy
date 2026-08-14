@@ -1,26 +1,25 @@
-import { motion } from 'framer-motion';
-import { GraduationCap, Users, Clock3, Sparkles } from 'lucide-react';
-
+import { motion } from "framer-motion";
+import { GraduationCap, Users, Clock3, Sparkles } from "lucide-react";
 const POINTS = [
   {
     icon: GraduationCap,
-    title: 'Doctorate-Level Therapists',
-    text: 'Our team holds advanced clinical degrees and continues ongoing specialty training every year.',
+    title: "Qualified & Experienced Therapists",
+    text: "Our physiotherapists use their clinical knowledge and experience to understand your condition and provide appropriate care.",
   },
   {
     icon: Users,
-    title: 'One Therapist, Full Journey',
-    text: 'You see the same therapist at every visit — no re-explaining your history, no lost context.',
+    title: "Personalized Care",
+    text: "Every patient is different. We create treatment plans based on your condition, needs, comfort, and recovery goals.",
   },
   {
     icon: Clock3,
-    title: '45–60 Minute Sessions',
-    text: 'No rushed 15-minute slots. Every session gives us real time to assess, treat, and coach.',
+    title: "Treatment at Your Pace",
+    text: "Session duration and treatment intensity may vary depending on your condition, progress, and individual treatment requirements.",
   },
   {
     icon: Sparkles,
-    title: 'Evidence-Based Programs',
-    text: 'Treatment plans are grounded in current clinical research, not one-size-fits-all templates.',
+    title: "Evidence-Based Treatment",
+    text: "We use practical, evidence-based physiotherapy techniques and exercises to support recovery and improve movement.",
   },
 ];
 
@@ -30,7 +29,9 @@ export default function WhyChooseUs() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
           <span className="section-eyebrow">Why patients choose us</span>
-          <h2 className="text-3xl font-bold sm:text-4xl">Expertise you can feel in the first session</h2>
+          <h2 className="text-3xl font-bold sm:text-4xl">
+            Expertise you can feel in the first session
+          </h2>
         </div>
 
         <div className="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
@@ -46,7 +47,9 @@ export default function WhyChooseUs() {
               <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-clinic-navy text-white sm:mx-0">
                 <point.icon className="h-6 w-6" />
               </div>
-              <h3 className="mt-4 font-display text-lg font-semibold text-clinic-navy">{point.title}</h3>
+              <h3 className="mt-4 font-display text-lg font-semibold text-clinic-navy">
+                {point.title}
+              </h3>
               <p className="mt-2 text-sm text-clinic-ink/65">{point.text}</p>
             </motion.div>
           ))}

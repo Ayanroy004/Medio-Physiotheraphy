@@ -33,7 +33,7 @@ export default function AboutPage() {
       <section className="bg-clinic-navy py-20 text-white">
         <div className="mx-auto max-w-5xl px-4 text-center sm:px-6 lg:px-8">
           <span className="section-eyebrow text-clinic-sky">About Vitality</span>
-          <h1 className="text-4xl font-bold sm:text-5xl">
+          <h1 className="text-4xl font-bold sm:text-5xl text-stone-300">
             Care led by clinicians, <span className="text-clinic-sky">not checklists</span>
           </h1>
           <RecoveryWave className="mx-auto mt-8 h-14 w-64 text-clinic-sky" strokeWidth={3} />
@@ -49,9 +49,9 @@ export default function AboutPage() {
             transition={{ duration: 0.5 }}
           >
             <span className="section-eyebrow">Lead Practitioner</span>
-            <h2 className="text-3xl font-bold text-clinic-navy">Dr. Aisha Verma, DPT</h2>
+            <h2 className="text-3xl font-bold text-clinic-navy">Pritam Shaw</h2>
             <p className="mt-4 text-clinic-ink/70">
-              Dr. Verma founded Vitality Physiotherapy after a decade working across
+              Pritam founded Medio Physiotherapy after a decade working across
               sports medicine clinics and post-surgical rehabilitation units. Her approach
               blends precise manual therapy with practical, real-world movement retraining —
               so patients don't just feel better in the clinic, they move better everywhere else.

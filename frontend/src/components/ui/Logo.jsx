@@ -12,7 +12,7 @@ export default function Logo({ dark = false }) {
         />
       </span>
       <span className={`font-display text-lg font-bold leading-none ${dark ? 'text-white' : 'text-clinic-navy'}`}>
-        Vitality
+        Medio
         <span className={`block text-[0.65rem] font-normal tracking-[0.25em] uppercase ${dark ? 'text-white/60' : 'text-clinic-teal'}`}>
           Physiotherapy
         </span>

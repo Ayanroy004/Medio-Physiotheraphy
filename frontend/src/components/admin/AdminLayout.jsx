@@ -1,13 +1,14 @@
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
-import { LayoutDashboard, CalendarCheck, Stethoscope, LogOut } from 'lucide-react';
+import { LayoutDashboard, CalendarCheck, Stethoscope, LogOut, UserPlus } from 'lucide-react';
 import toast from 'react-hot-toast';
 import Logo from '../ui/Logo.jsx';
 import { useAuth } from '../../context/AuthContext.jsx';
 
 const NAV = [
   { to: '/admin', label: 'Dashboard', icon: LayoutDashboard, end: true },
-  { to: '/admin/appointments', label: 'Appointments', icon: CalendarCheck },
+  // { to: '/admin/appointments', label: 'Appointments', icon: CalendarCheck },
   { to: '/admin/services', label: 'Services', icon: Stethoscope },
+  // { to: '/admin/add-member', label: 'Add Member', icon: UserPlus },
 ];
 
 export default function AdminLayout() {

@@ -30,6 +30,7 @@ export function AuthProvider({ children }) {
 
   const login = async (credentials) => {
     const data = await loginRequest(credentials);
+    console.log('login function received data:', data); // Debugging line
     localStorage.setItem('vitality_token', data.token);
     setUser(data.user);
     return data.user;

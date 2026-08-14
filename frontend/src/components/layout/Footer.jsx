@@ -21,7 +21,7 @@ export default function Footer() {
           <ul className="space-y-2 text-sm text-white/70">
             <li><Link to="/services" className="hover:text-white">Our Services</Link></li>
             <li><Link to="/about" className="hover:text-white">About Us</Link></li>
-            <li><Link to="/book" className="hover:text-white">Book Appointment</Link></li>
+            {/* <li><Link to="/book" className="hover:text-white">Book Appointment</Link></li> */}
             <li><Link to="/contact" className="hover:text-white">Contact &amp; FAQ</Link></li>
           </ul>
         </div>
@@ -42,8 +42,8 @@ export default function Footer() {
             Get in Touch
           </h3>
           <ul className="space-y-2 text-sm text-white/70">
-            <li className="flex items-center gap-2"><MapPin className="h-4 w-4 shrink-0" /> 24 Riverside Lane, Kolkata, WB</li>
-            <li className="flex items-center gap-2"><Phone className="h-4 w-4 shrink-0" /> +91 98765 43210</li>
+            <li className="flex items-center gap-2"><MapPin className="h-4 w-4 shrink-0" /> Station Rd, Boinchi, Batika, West Bengal 712134</li>
+            <li className="flex items-center gap-2"><Phone className="h-4 w-4 shrink-0" /> +91 6295 905185</li>
             <li className="flex items-center gap-2"><Mail className="h-4 w-4 shrink-0" /> care@vitalityphysio.com</li>
           </ul>
         </div>
