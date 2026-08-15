@@ -189,7 +189,7 @@ I would like to know more about your physiotherapy services.`;
 
             {/* Call */}
             <a
-              href="tel:+919876543210"
+              href="tel:6295905185"
               className="
                 flex
                 min-h-[46px]
