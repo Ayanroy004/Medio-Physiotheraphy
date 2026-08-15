@@ -2,8 +2,7 @@ import axios from "axios";
 
 console.log("Production API URL:", import.meta.env.VITE_API_URL);
 const api = axios.create({
-  // baseURL: "https://medio-physiotheraphy.onrender.com/api",
-  baseURL: import.meta.env.VITE_API_URL,
+  baseURL: "https://medio-physiotheraphy.onrender.com/api",
   withCredentials: true,
 });
 
