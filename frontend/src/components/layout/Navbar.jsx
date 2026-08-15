@@ -62,10 +62,10 @@ export default function Navbar() {
                 {link.label}
               </NavLink>
             ))}
-            <NavLink to="/book" className="btn-primary justify-center text-sm" onClick={() => setOpen(false)}>
+            {/* <NavLink to="/book" className="btn-primary justify-center text-sm" onClick={() => setOpen(false)}>
               <CalendarPlus className="h-4 w-4" />
               Book Appointment
-            </NavLink>
+            </NavLink> */}
           </div>
         </div>
       )}
