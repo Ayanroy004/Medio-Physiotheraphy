@@ -18,7 +18,7 @@ export default function ContactPage() {
   const onSubmit = (values) => {
     const whatsappNumber = "6295905185";
 
-    const message = `Hello Vitality Physiotherapy Clinic,
+    const message = `Hello Medio Physiotherapy Clinic,
 
 My name is ${values.name}.
 
