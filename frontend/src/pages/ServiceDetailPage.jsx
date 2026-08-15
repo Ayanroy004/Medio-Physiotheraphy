@@ -25,6 +25,7 @@ export default function ServiceDetailPage() {
   });
 
   const [selectedImageIndex, setSelectedImageIndex] = useState(null);
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
 
   const images = service?.images || [];
 
@@ -122,14 +123,19 @@ export default function ServiceDetailPage() {
     setTouchStartY(null);
   };
 
+  // Change active gallery image
+  const selectImage = (index) => {
+    setActiveImageIndex(index);
+  };
+
   if (isLoading) {
     return (
-      <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8">
         <div className="animate-pulse">
           <div className="h-8 w-32 rounded bg-clinic-fog" />
 
-          <div className="mt-8 grid gap-10 lg:grid-cols-2">
-            <div className="h-[450px] rounded-2xl bg-clinic-fog" />
+          <div className="mt-8 grid gap-8 lg:grid-cols-2 lg:gap-10">
+            <div className="h-[320px] rounded-2xl bg-clinic-fog sm:h-[420px]" />
 
             <div>
               <div className="h-10 w-3/4 rounded bg-clinic-fog" />
@@ -143,16 +149,19 @@ export default function ServiceDetailPage() {
 
   if (isError || !service) {
     return (
-      <div className="mx-auto max-w-3xl px-4 py-20 text-center">
+      <div className="mx-auto max-w-3xl px-4 py-16 text-center sm:py-20">
         <h1 className="text-2xl font-bold text-clinic-navy">
           Service not found
         </h1>
 
-        <p className="mt-3 text-clinic-ink/60">
+        <p className="mt-3 text-sm leading-6 text-clinic-ink/60 sm:text-base">
           We couldn't find the service you're looking for.
         </p>
 
-        <Link to="/services" className="btn-primary mt-6 inline-flex">
+        <Link
+          to="/services"
+          className="btn-primary mt-6 inline-flex items-center gap-2"
+        >
           <ArrowLeft className="h-4 w-4" />
           Back to Services
         </Link>
@@ -162,46 +171,227 @@ export default function ServiceDetailPage() {
 
   return (
     <>
-      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+      <div
+        className="
+          mx-auto
+          max-w-7xl
+          px-4
+          py-8
+          sm:px-6
+          sm:py-12
+          lg:px-8
+        "
+      >
         {/* Back */}
         <Link
           to="/services"
-          className="inline-flex items-center gap-2 text-sm font-medium text-clinic-ink/60 transition hover:text-clinic-teal"
+          className="
+            inline-flex
+            items-center
+            gap-2
+            text-sm
+            font-medium
+            text-clinic-ink/60
+            transition
+            hover:text-clinic-teal
+          "
         >
           <ArrowLeft className="h-4 w-4" />
           Back to Services
         </Link>
 
         {/* Main */}
-        <div className="mt-8 grid gap-10 lg:grid-cols-2 lg:items-start">
-          {/* Images */}
-          <div>
+        <div
+          className="
+            mt-7
+            grid
+            gap-8
+            lg:mt-8
+            lg:grid-cols-2
+            lg:items-start
+            lg:gap-10
+          "
+        >
+          {/* =====================================================
+              IMAGE GALLERY
+          ====================================================== */}
+          <div className="min-w-0">
             {images.length > 0 ? (
-              <div className="grid gap-4 sm:grid-cols-2">
-                {images.map((image, index) => (
-                  <button
-                    key={image.publicId || index}
-                    type="button"
-                    onClick={() => openImage(index)}
-                    className={`group overflow-hidden rounded-2xl text-left focus:outline-none focus:ring-2 focus:ring-clinic-teal focus:ring-offset-2 ${
-                      index === 0 && images.length > 1 ? "sm:col-span-2" : ""
-                    }`}
-                    aria-label={`Open ${service.title} image ${index + 1}`}
-                  >
-                    <img
-                      src={image.imageUrl}
-                      alt={`${service.title} ${index + 1}`}
-                      className={`w-full cursor-zoom-in object-cover transition-transform duration-500 group-hover:scale-105 ${
-                        index === 0 && images.length > 1 ? "h-[420px]" : "h-64"
+              <>
+                {/* Main Image */}
+                <button
+                  type="button"
+                  onClick={() => openImage(activeImageIndex)}
+                  className="
+                    group
+                    block
+                    w-full
+                    overflow-hidden
+                    rounded-xl
+                    text-left
+                    focus:outline-none
+                    focus:ring-2
+                    focus:ring-clinic-teal
+                    focus:ring-offset-2
+                    sm:rounded-2xl
+                  "
+                  aria-label={`Open ${service.title} image ${
+                    activeImageIndex + 1
+                  }`}
+                >
+                  <img
+                    src={images[activeImageIndex].imageUrl}
+                    alt={`${service.title} ${activeImageIndex + 1}`}
+                    className="
+                      h-[260px]
+                      w-full
+                      cursor-zoom-in
+                      object-cover
+                      transition-transform
+                      duration-500
+                      group-hover:scale-[1.02]
+                      sm:h-[360px]
+                      md:h-[420px]
+                    "
+                  />
+                </button>
+
+                {/* Mobile / Tablet Thumbnail Gallery */}
+                <div
+                  className="
+                    mt-3
+                    flex
+                    gap-2
+                    overflow-x-auto
+                    pb-1
+                    sm:mt-4
+                    sm:gap-3
+                    lg:hidden
+                  "
+                >
+                  {images.map((image, index) => (
+                    <button
+                      key={image.publicId || index}
+                      type="button"
+                      onClick={() => selectImage(index)}
+                      className={`
+                        group
+                        relative
+                        h-16
+                        w-20
+                        shrink-0
+                        overflow-hidden
+                        rounded-lg
+                        border-2
+                        transition-all
+                        sm:h-20
+                        sm:w-24
+                        sm:rounded-xl
+                        ${
+                          activeImageIndex === index
+                            ? "border-clinic-teal ring-1 ring-clinic-teal/30"
+                            : "border-transparent opacity-70 hover:opacity-100"
+                        }
+                      `}
+                      aria-label={`View ${service.title} image ${
+                        index + 1
                       }`}
-                    />
-                  </button>
-                ))}
-              </div>
+                    >
+                      <img
+                        src={image.imageUrl}
+                        alt=""
+                        className="
+                          h-full
+                          w-full
+                          object-cover
+                          transition-transform
+                          duration-300
+                          group-hover:scale-105
+                        "
+                      />
+
+                      {/* Active Indicator */}
+                      {activeImageIndex === index && (
+                        <span className="absolute inset-x-0 bottom-0 h-1 bg-clinic-teal" />
+                      )}
+                    </button>
+                  ))}
+                </div>
+
+                {/* Desktop Gallery */}
+                <div className="mt-4 hidden gap-3 lg:grid lg:grid-cols-4">
+                  {images.slice(0, 8).map((image, index) => (
+                    <button
+                      key={image.publicId || index}
+                      type="button"
+                      onClick={() => selectImage(index)}
+                      className={`
+                        group
+                        relative
+                        h-20
+                        overflow-hidden
+                        rounded-xl
+                        border-2
+                        transition-all
+                        ${
+                          activeImageIndex === index
+                            ? "border-clinic-teal ring-1 ring-clinic-teal/30"
+                            : "border-transparent opacity-75 hover:opacity-100"
+                        }
+                      `}
+                      aria-label={`View ${service.title} image ${
+                        index + 1
+                      }`}
+                    >
+                      <img
+                        src={image.imageUrl}
+                        alt=""
+                        className="
+                          h-full
+                          w-full
+                          object-cover
+                          transition-transform
+                          duration-300
+                          group-hover:scale-105
+                        "
+                      />
+
+                      {activeImageIndex === index && (
+                        <span className="absolute inset-x-0 bottom-0 h-1 bg-clinic-teal" />
+                      )}
+                    </button>
+                  ))}
+                </div>
+
+                {/* Image Count */}
+                <div className="mt-3 flex items-center gap-2 text-xs text-clinic-ink/50 sm:text-sm">
+                  <ImageIcon className="h-4 w-4" />
+
+                  {images.length}{" "}
+                  {images.length === 1 ? "image" : "images"}
+
+                  {images.length > 1 && (
+                    <span className="text-clinic-ink/35">
+                      • Tap an image to view
+                    </span>
+                  )}
+                </div>
+              </>
             ) : (
-              <div className="flex h-[420px] items-center justify-center rounded-2xl bg-clinic-fog">
+              <div
+                className="
+                  flex
+                  h-[260px]
+                  items-center
+                  justify-center
+                  rounded-xl
+                  bg-clinic-fog
+                  sm:h-[420px]
+                  sm:rounded-2xl
+                "
+              >
                 <div className="text-center">
-                  <ImageIcon className="mx-auto h-12 w-12 text-clinic-ink/25" />
+                  <ImageIcon className="mx-auto h-10 w-10 text-clinic-ink/25 sm:h-12 sm:w-12" />
 
                   <p className="mt-3 text-sm text-clinic-ink/40">
                     No images available
@@ -211,50 +401,94 @@ export default function ServiceDetailPage() {
             )}
           </div>
 
-          {/* Information */}
-          <div className="lg:sticky lg:top-24">
-            <span className="section-eyebrow">Our Service</span>
+          {/* =====================================================
+              INFORMATION
+          ====================================================== */}
+          <div className="min-w-0 lg:sticky lg:top-24">
+            <span className="section-eyebrow text-xs sm:text-sm">
+              Our Service
+            </span>
 
-            <h1 className="mt-2 text-4xl font-bold text-clinic-navy">
+            <h1
+              className="
+                mt-2
+                text-3xl
+                font-bold
+                leading-tight
+                text-clinic-navy
+                sm:text-4xl
+              "
+            >
               {service.title}
             </h1>
 
-            <div className="mt-6">
-              <h2 className="text-lg font-semibold text-clinic-navy">
+            <div className="mt-5 sm:mt-6">
+              <h2 className="text-base font-semibold text-clinic-navy sm:text-lg">
                 About this service
               </h2>
 
-              <p className="mt-3 whitespace-pre-line text-base leading-8 text-clinic-ink/70">
+              <p
+                className="
+                  mt-3
+                  whitespace-pre-line
+                  text-sm
+                  leading-7
+                  text-clinic-ink/70
+                  sm:text-base
+                  sm:leading-8
+                "
+              >
                 {service.description}
               </p>
             </div>
 
-            {images.length > 0 && (
-              <div className="mt-6 flex items-center gap-2 text-sm text-clinic-ink/50">
-                <ImageIcon className="h-4 w-4" />
-                {images.length} {images.length === 1 ? "image" : "images"}
-              </div>
-            )}
-
+            {/* Contact */}
             <Link
               to="/contact"
               state={{
                 preselectedServiceId: service._id,
                 serviceName: service.title,
               }}
-              className="btn-primary mt-8 inline-flex w-full justify-center sm:w-auto"
+              className="
+                btn-primary
+                mt-7
+                inline-flex
+                min-h-[48px]
+                w-full
+                items-center
+                justify-center
+                gap-2
+                px-5
+                text-sm
+                sm:mt-8
+                sm:w-auto
+                sm:px-6
+                sm:text-base
+              "
             >
               Contact Us for This Service
-              <ArrowRight className="h-4 w-4" />
+              <ArrowRight className="h-4 w-4 shrink-0" />
             </Link>
           </div>
         </div>
       </div>
 
-      {/* Image Lightbox / Popup */}
+      {/* =====================================================
+          IMAGE LIGHTBOX / POPUP
+      ====================================================== */}
       {selectedImageIndex !== null && images.length > 0 && (
         <div
-          className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/90 p-3 sm:p-6"
+          className="
+            fixed
+            inset-0
+            z-[9999]
+            flex
+            items-center
+            justify-center
+            bg-black/90
+            p-2
+            sm:p-6
+          "
           role="dialog"
           aria-modal="true"
           aria-label={`${service.title} image viewer`}
@@ -266,14 +500,55 @@ export default function ServiceDetailPage() {
           <button
             type="button"
             onClick={closeImage}
-            className="absolute right-3 top-3 z-20 flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-sm transition hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white sm:right-6 sm:top-6"
+            className="
+              absolute
+              right-3
+              top-3
+              z-20
+              flex
+              h-11
+              w-11
+              items-center
+              justify-center
+              rounded-full
+              bg-white/10
+              text-white
+              backdrop-blur-sm
+              transition
+              hover:bg-white/20
+              focus:outline-none
+              focus:ring-2
+              focus:ring-white
+              sm:right-6
+              sm:top-6
+            "
             aria-label="Close image viewer"
           >
             <X className="h-6 w-6" />
           </button>
 
           {/* Image Counter */}
-          <div className="absolute left-1/2 top-4 z-20 -translate-x-1/2 rounded-full bg-black/50 px-4 py-2 text-sm font-medium text-white backdrop-blur-sm sm:top-6">
+          <div
+            className="
+              absolute
+              left-1/2
+              top-4
+              z-20
+              -translate-x-1/2
+              rounded-full
+              bg-black/50
+              px-3
+              py-1.5
+              text-xs
+              font-medium
+              text-white
+              backdrop-blur-sm
+              sm:top-6
+              sm:px-4
+              sm:py-2
+              sm:text-sm
+            "
+          >
             {selectedImageIndex + 1} / {images.length}
           </div>
 
@@ -285,10 +560,33 @@ export default function ServiceDetailPage() {
                 event.stopPropagation();
                 showPreviousImage();
               }}
-              className="absolute left-2 top-1/2 z-20 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-sm transition hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white sm:left-6 sm:h-12 sm:w-12"
+              className="
+                absolute
+                left-2
+                top-1/2
+                z-20
+                flex
+                h-10
+                w-10
+                -translate-y-1/2
+                items-center
+                justify-center
+                rounded-full
+                bg-white/10
+                text-white
+                backdrop-blur-sm
+                transition
+                hover:bg-white/20
+                focus:outline-none
+                focus:ring-2
+                focus:ring-white
+                sm:left-6
+                sm:h-12
+                sm:w-12
+              "
               aria-label="Previous image"
             >
-              <ChevronLeft className="h-7 w-7" />
+              <ChevronLeft className="h-6 w-6 sm:h-7 sm:w-7" />
             </button>
           )}
 
@@ -300,29 +598,80 @@ export default function ServiceDetailPage() {
                 event.stopPropagation();
                 showNextImage();
               }}
-              className="absolute right-2 top-1/2 z-20 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-sm transition hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white sm:right-6 sm:h-12 sm:w-12"
+              className="
+                absolute
+                right-2
+                top-1/2
+                z-20
+                flex
+                h-10
+                w-10
+                -translate-y-1/2
+                items-center
+                justify-center
+                rounded-full
+                bg-white/10
+                text-white
+                backdrop-blur-sm
+                transition
+                hover:bg-white/20
+                focus:outline-none
+                focus:ring-2
+                focus:ring-white
+                sm:right-6
+                sm:h-12
+                sm:w-12
+              "
               aria-label="Next image"
             >
-              <ChevronRight className="h-7 w-7" />
+              <ChevronRight className="h-6 w-6 sm:h-7 sm:w-7" />
             </button>
           )}
 
           {/* Large Image */}
           <div
-            className="flex h-full w-full items-center justify-center px-8 py-16 sm:px-16 sm:py-12"
+            className="
+              flex
+              h-full
+              w-full
+              items-center
+              justify-center
+              px-10
+              py-16
+              sm:px-16
+              sm:py-12
+            "
             onClick={(event) => event.stopPropagation()}
           >
             <img
               src={images[selectedImageIndex].imageUrl}
               alt={`${service.title} ${selectedImageIndex + 1}`}
-              className="max-h-full max-w-full rounded-lg object-contain shadow-2xl"
+              className="
+                max-h-full
+                max-w-full
+                rounded-lg
+                object-contain
+                shadow-2xl
+              "
               draggable="false"
             />
           </div>
 
           {/* Mobile Swipe Hint */}
           {images.length > 1 && (
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-center text-xs text-white/60 sm:hidden">
+            <div
+              className="
+                absolute
+                bottom-4
+                left-1/2
+                -translate-x-1/2
+                whitespace-nowrap
+                text-center
+                text-[11px]
+                text-white/60
+                sm:hidden
+              "
+            >
               Swipe left or right to change image
             </div>
           )}

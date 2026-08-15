@@ -14,49 +14,150 @@ export default function ServiceCard({
     <>
       {/* Service Image */}
       {service.images?.length > 0 ? (
-        <div className="mb-5 h-48 overflow-hidden rounded-xl">
+        <div
+          className="
+            mb-3
+            h-28
+            overflow-hidden
+            rounded-lg
+            sm:mb-4
+            sm:h-36
+            sm:rounded-xl
+            lg:h-40
+          "
+        >
           <img
             src={service.images[0].imageUrl}
             alt={service.title}
-            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+            loading="lazy"
+            className="
+              h-full
+              w-full
+              object-cover
+              transition-transform
+              duration-500
+              group-hover:scale-105
+            "
           />
         </div>
       ) : (
-        <div className="mb-5 flex h-48 items-center justify-center rounded-xl bg-clinic-fog">
-          <ImageIcon className="h-10 w-10 text-clinic-ink/25" />
+        <div
+          className="
+            mb-3
+            flex
+            h-28
+            items-center
+            justify-center
+            rounded-lg
+            bg-clinic-fog
+            sm:mb-4
+            sm:h-36
+            sm:rounded-xl
+            lg:h-40
+          "
+        >
+          <ImageIcon className="h-7 w-7 text-clinic-ink/25 sm:h-9 sm:w-9" />
         </div>
       )}
 
       {/* Content */}
-      <h3 className="text-lg font-semibold text-clinic-navy">
-        {service.title}
-      </h3>
+      <div className="min-w-0">
+        <h3
+          className="
+            line-clamp-2
+            text-sm
+            font-semibold
+            leading-5
+            text-clinic-navy
+            sm:text-base
+            sm:leading-6
+          "
+        >
+          {service.title}
+        </h3>
 
-      <p className="mt-2 line-clamp-3 text-sm leading-6 text-clinic-ink/65">
-        {service.description}
-      </p>
+        <p
+          className="
+            mt-1.5
+            line-clamp-2
+            text-[12px]
+            leading-[1.35rem]
+            text-clinic-ink/65
+            sm:mt-2
+            sm:text-sm
+            sm:leading-5
+          "
+        >
+          {service.description}
+        </p>
+      </div>
 
       {/* Bottom */}
-      <div className="mt-5 flex items-center justify-between text-sm">
-        {showImageCount && service.images?.length > 0 ? (
-          <span className="flex items-center gap-1.5 text-clinic-ink/50">
-            <ImageIcon className="h-4 w-4" />
+      <div
+        className="
+          mt-3
+          flex
+          min-h-[34px]
+          items-center
+          justify-between
+          gap-2
+          text-[11px]
+          sm:mt-4
+          sm:min-h-[38px]
+          sm:text-xs
+        "
+      >
+        {/* Image Count */}
+        <div className="min-w-0">
+          {showImageCount && service.images?.length > 0 ? (
+            <span className="flex items-center gap-1 text-clinic-ink/50">
+              <ImageIcon className="h-3.5 w-3.5 shrink-0 sm:h-4 sm:w-4" />
 
-            {service.images.length}{" "}
-            {service.images.length === 1 ? "image" : "images"}
-          </span>
-        ) : (
-          <span />
-        )}
+              <span className="truncate">
+                {service.images.length}{" "}
+                {service.images.length === 1 ? "image" : "images"}
+              </span>
+            </span>
+          ) : (
+            <span />
+          )}
+        </div>
 
+        {/* Contact / Action */}
         <Link
           to={buttonTo}
           onClick={(e) => e.stopPropagation()}
-          className="flex items-center gap-1 font-medium text-clinic-navy group-hover:text-clinic-teal"
+          className="
+            inline-flex
+            min-h-[34px]
+            shrink-0
+            items-center
+            gap-1
+            rounded-md
+            px-1.5
+            py-1.5
+            font-medium
+            text-clinic-navy
+            transition-colors
+            hover:text-clinic-teal
+            sm:min-h-[38px]
+            sm:px-2
+            sm:py-2
+          "
         >
-          {buttonText}
+          <span>{buttonText}</span>
 
-          <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+          <ArrowRight
+            className="
+              h-3.5
+              w-3.5
+              transition-transform
+              duration-200
+              group-hover:translate-x-1
+              sm:h-4
+              sm:w-4
+            "
+          />
         </Link>
       </div>
     </>
@@ -67,7 +168,23 @@ export default function ServiceCard({
       to={`/services/${service._id}`}
       className="block h-full"
     >
-      <div className="card group h-full cursor-pointer overflow-hidden transition-shadow hover:shadow-lg">
+      <div
+        className="
+          card
+          group
+          flex
+          h-full
+          flex-col
+          overflow-hidden
+          p-3
+          transition-all
+          duration-300
+          hover:-translate-y-1
+          hover:shadow-lg
+          sm:p-4
+          lg:p-5
+        "
+      >
         {content}
       </div>
     </Link>
